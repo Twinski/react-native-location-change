@@ -21,26 +21,20 @@ RCT_EXPORT_MODULE()
 }
 
 RCT_EXPORT_METHOD(start) {
-    if (!locationManager)
-        locationManager = [[CLLocationManager alloc] init];
-    
-    //locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;
-    //locationManager.distanceFilter = 50;// meters
+    if (!locationManager) locationManager = [[CLLocationManager alloc] init];
     locationManager.delegate = self;
-    
+    locationManager.allowsBackgroundLocationUpdates = true;
+    locationManager.pausesLocationUpdatesAutomatically = true;
     if ([locationManager respondsToSelector:@selector(requestAlwaysAuthorization)]) {
         [locationManager requestAlwaysAuthorization];
     } else if ([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         [locationManager requestWhenInUseAuthorization];
     }
-    
     [locationManager startMonitoringSignificantLocationChanges];
 }
 
 RCT_EXPORT_METHOD(stop) {
-    if (!locationManager)
-        return;
-    
+    if (!locationManager) return;
     [locationManager stopMonitoringSignificantLocationChanges];
 }
 
@@ -58,8 +52,7 @@ RCT_EXPORT_METHOD(stop) {
                                   @"speed": @(location.speed),
                                   },
                           @"timestamp": @([location.timestamp timeIntervalSince1970] * 1000) // in ms
-                          };
-    
+                        };
     [self sendEventWithName:@"significantLocationChange" body:lastLocationEvent];
 }
 
