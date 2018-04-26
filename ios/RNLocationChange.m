@@ -30,6 +30,8 @@ RCT_EXPORT_METHOD(start) {
     } else if ([locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
         [locationManager requestWhenInUseAuthorization];
     }
+    locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;
+    [locationManager startUpdatingLocation];
     [locationManager startMonitoringSignificantLocationChanges];
 }
 
