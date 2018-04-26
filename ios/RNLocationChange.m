@@ -4,6 +4,8 @@
 #import <CoreLocation/CLLocationManager.h>
 #import <CoreLocation/CLLocationManagerDelegate.h>
 
+// TESTJE
+
 @implementation RNLocationChange
 {
     CLLocationManager * locationManager;
